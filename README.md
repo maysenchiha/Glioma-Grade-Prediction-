@@ -111,12 +111,12 @@ Dans le domaine médical, il est crucial de comprendre **pourquoi** un modèle f
 
 ## 🙏 Remerciements
 
-- Dataset fourni par [Source du dataset]
+- Dataset Open Source.
 - Inspiré par les travaux de recherche en neuro-oncologie
 - Communauté open-source pour les outils XAI
 
 ---
 
-⚠️ **Disclaimer** : Cette application est développée à des fins de recherche et d'éducation. Elle ne doit pas être utilisée comme substitut à un diagnostic médical professionnel. Consultez toujours un professionnel de santé qualifié pour toute question médicale.
+⚠️ **Disclaimer** : Cette application est développée à des fins de recherche et d'éducation dans le cadre d'un PFA. Elle ne doit pas être utilisée comme substitut à un diagnostic médical professionnel. Consultez toujours un professionnel de santé qualifié pour toute question médicale.
 
 **© 2024 - Glioma Grade Prediction Project**
