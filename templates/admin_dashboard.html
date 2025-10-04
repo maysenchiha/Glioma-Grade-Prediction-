@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard</title>
+  <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/logos/m1.png') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.min.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="{{ url_for('index') }}" class="text-nowrap logo-img">
+            <img src="{{ url_for('static', filename='images/logos/mmm1.png') }}" width="180" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Home</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('admin_dashboard') }}" aria-expanded="false">
+                <i class="ti ti-layout-dashboard"></i>
+                <span class="hide-menu">Dashboard Admin</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Médecin</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('gerer_medecin') }}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file-description"></i>
+                </span>
+                <span class="hide-menu"> Gérer Médecin</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">AUTH</span>
+            </li>
+            <li class="sidebar-item">
+              {% if current_user.is_authenticated %}
+                  <a class="sidebar-link" href="{{ url_for('logout') }}" aria-expanded="false">
+                      <span><i class="ti ti-logout"></i></span>
+                      <span class="hide-menu">Déconnexion </span>
+                  </a>
+              {% else %}
+                  <a class="sidebar-link" href="{{ url_for('authentication_login') }}" aria-expanded="false">
+                      <span><i class="ti ti-login"></i></span>
+                      <span class="hide-menu">Connexion</span>
+                  </a>
+              {% endif %}
+          </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!-- Sidebar End -->
+
+    <!-- Main wrapper -->
+    <div class="body-wrapper">
+      <!-- Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="{{ url_for('static', filename='images/profile/' + current_user.profile_image) }}" 
+                       alt="User Image" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="{{ url_for('user_profile') }}" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-mail fs-6"></i>
+                      <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Header End -->
+
+     <!-- Main Content -->
+<div class="container-fluid">
+  <!-- Welcome Admin -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="alert alert-primary text-center" role="alert">
+        <h4 class="fw-semibold mb-0">Bonjour Admin. {{ user_name }}</h4>
+      </div>
+    </div>
+  </div>
+
+ <!-- Deux Colonnes Principales -->
+<div class="row g-3">
+  <!-- Colonne Gauche : Nombre de Médecins et Actifs/Inactifs -->
+  <div class="col-lg-4">
+    <div class="row g-3">
+      <!-- Nombre de Médecins -->
+      <div class="col-12">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h5 class="card-title mb-2 fw-semibold fs-6">Nombre de Médecins</h5>
+                <h4 class="fw-bold mb-1 fs-5">{{ nombre_medecins }}</h4>
+                <div class="d-flex align-items-center">
+                  <span class="me-2 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-arrow-up-right text-success fs-7"></i>
+                  </span>
+                  <p class="text-dark me-1 mb-0 fs-7">+{{ variation }}%</p>
+                  <p class="mb-0 fs-7">depuis l'année dernière</p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="text-white bg-primary rounded-circle p-2 d-flex align-items-center justify-content-center">
+                  <i class="ti ti-users fs-7"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actifs/Inactifs -->
+      <div class="col-12">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h5 class="card-title mb-2 fw-semibold fs-6">Médecins Actifs vs Inactifs</h5>
+                <h4 class="fw-bold mb-1 fs-5">{{ medecins_actifs }} / {{ medecins_inactifs }}</h4>
+                <div class="d-flex align-items-center">
+                  <span class="me-2 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-check text-success fs-7"></i>
+                  </span>
+                  <p class="text-dark me-1 mb-0 fs-7">{{ medecins_actifs }} Actifs</p>
+                </div>
+                <div class="d-flex align-items-center mt-2">
+                  <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-x text-danger fs-7"></i>
+                  </span>
+                  <p class="text-dark me-1 mb-0 fs-7">{{ medecins_inactifs }} Inactifs</p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="text-white bg-primary rounded-circle p-2 d-flex align-items-center justify-content-center">
+                  <i class="ti ti-user-check fs-7"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colonne Droite : Répartition des Spécialités et Répartition par Sexe -->
+  <div class="col-lg-8">
+    <div class="row g-3">
+      <!-- Répartition des Spécialités -->
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <h5 class="card-title mb-3 fw-semibold">Répartition des Spécialités</h5>
+            <canvas id="specialiteChart" width="250" height="250"></canvas> <!-- Dimensions augmentées -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Répartition par Sexe -->
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <h5 class="card-title mb-3 fw-semibold">Répartition par Sexe</h5>
+            <canvas id="sexeChart" width="250" height="250"></canvas> <!-- Dimensions augmentées -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='libs/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/sidebarmenu.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='libs/simplebar/dist/simplebar.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Graphiques -->
+
+
+<script>
+  // Graphique des spécialités
+  const specialiteCtx = document.getElementById('specialiteChart').getContext('2d');
+  const specialiteChart = new Chart(specialiteCtx, {
+    type: 'pie',
+    data: {
+      labels: {{ specialite_labels | tojson }},
+      datasets: [{
+        label: 'Répartition des Spécialités',
+        data: {{ specialite_counts | tojson }},
+        backgroundColor: ['#6fa8dc', '#b4a7d6', '#d5a6bd', '#f9cb9c'], // Bleu clair et violet clair
+        borderColor: ['#6fa8dc', '#b4a7d6', '#d5a6bd', '#f9cb9c'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        title: {
+          display: true,
+          text: 'Répartition des Spécialités'
+        }
+      }
+    }
+  });
+
+  // Graphique du sexe
+  const sexeCtx = document.getElementById('sexeChart').getContext('2d');
+  const sexeChart = new Chart(sexeCtx, {
+    type: 'pie',
+    data: {
+      labels: {{ sexe_labels | tojson }},
+      datasets: [{
+        label: 'Répartition par Sexe',
+        data: {{ sexe_counts | tojson }},
+        backgroundColor: ['#6fa8dc', '#b4a7d6'], // Bleu clair et violet clair
+        borderColor: ['#6fa8dc', '#b4a7d6'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        title: {
+          display: true,
+          text: 'Répartition par Sexe'
+        }
+      }
+    }
+  });
+
+  // Graphique des médecins actifs vs inactifs
+  const actifInactifCtx = document.getElementById('actifInactifChart').getContext('2d');
+  const actifInactifChart = new Chart(actifInactifCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Actifs', 'Inactifs'],
+      datasets: [{
+        label: 'Médecins Actifs vs Inactifs',
+        data: [{{ medecins_actifs }}, {{ medecins_inactifs }}],
+        backgroundColor: ['#6fa8dc', '#b4a7d6'], // Bleu clair et violet clair
+        borderColor: ['#6fa8dc', '#b4a7d6'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        title: {
+          display: true,
+          text: 'Médecins Actifs vs Inactifs'
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

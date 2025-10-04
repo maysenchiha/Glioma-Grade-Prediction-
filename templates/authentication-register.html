@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Médecin</title>
+  <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/logos/mmm1.png') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.min.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.min.css') }}" />
+  <link href="../static/css/main.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <header id="header" class="header sticky-top">
+    <div class="branding d-flex align-items-center">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="/accueil#hero" class="logo d-flex align-items-center me-auto">
+          <img src="{{ url_for('static', filename='images/logos/mmm1.png') }}" width="180" alt="" />
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/accueil#hero" class="active">Acceuil<br></a></li>
+            <li><a href="/accueil#about">About</a></li>
+            <li><a href="/accueil#services">Services</a></li>
+            <li><a href="accueil#departments">Departments</a></li>
+            <li><a href="/accueil#contact">Contact</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+        <a class="cta-btn d-none d-sm-block" href="/authentication-login">S'inscrire</a>
+
+      </div>
+
+    </div>
+
+  </header>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+    <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-9 col-lg-7 col-xxl-4">
+            <div class="card mb-0">
+              <div class="card-body">
+                <div class="text-center mb-3">
+                  <a href="{{ url_for('index') }}" class="text-nowrap logo-img">
+                    <img src="{{ url_for('static', filename='images/logos/mmm1.png') }}" width="180" alt="" />
+                  </a>
+                </div>
+                <p class="text-center">Créez un compte médical</p>
+                <form method="POST" action="{{ url_for('authentication_register') }}">
+                  <div class="mb-3">
+                    <label for="exampleInputtext1" class="form-label">Nom</label>
+                    <input type="text" class="form-control" id="exampleInputtext1" name="name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputtext2" class="form-label">prénom</label>
+                    <input type="text" class="form-control" id="exampleInputtext1" name="prenom" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Adresse e-mail</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">S'inscrire</button>
+                </form>
+                <p class="text-center">
+                  Déjà inscrit ? <a href="{{ url_for('authentication_login') }}">Se connecter ici</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='libs/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>
